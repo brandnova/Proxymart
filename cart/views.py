@@ -1,8 +1,11 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from django.urls import reverse
 from products.models import Product, Category
 from .models import Cart, CartItem
 from core.models import SiteSettings
+from accounts.models import Profile
 
 @login_required
 def add_to_cart(request, product_id):
@@ -31,13 +34,26 @@ def update_cart(request, item_id):
 
 @login_required
 def cart_detail(request):
+    user = request.user
+    products = Product.objects.all()
+    try:
+        profile = Profile.objects.get(user=user)
+    except Profile.DoesNotExist:
+        profile = Profile(user=user) 
+
     site_settings = SiteSettings.objects.first()
     cart, created = Cart.objects.get_or_create(user=request.user)
     total_price = cart.get_total_price()
     categories = Category.objects.all()
     return render(request, 'cart/cart_detail.html', {
+        'products': products,
         'cart': cart, 
+        'profile': profile, 
         'total_price': total_price,
         'categories': categories,
         'site_settings': site_settings,
         })
+
+def user_logout(request):
+    logout(request)
+    return redirect(reverse('login'))

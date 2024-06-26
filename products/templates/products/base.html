@@ -56,6 +56,9 @@
                <img src="{% static 'assets/images/p-m-logoT.PNG' %}" alt="Logo" width="200" height="50" class="d-inline-block align-text-top">
                
             </a>
+            {% if user.is_authenticated %}
+               <a href="{% url 'user_logout' %}" class="btn btn-warning">Logout</a>
+            {% endif %}
          </div>
       </nav>
       

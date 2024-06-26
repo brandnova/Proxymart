@@ -1,5 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from django.urls import reverse
 from .models import Category, Product
 # from .models import Cart, CartItem
 from core.models import SiteSettings
@@ -27,3 +29,6 @@ def product_detail(request, pk):
         'site_settings': site_settings,
         })
 
+def user_logout(request):
+    logout(request)
+    return redirect(reverse('login'))

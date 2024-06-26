@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import logout
+from django.urls import reverse
 from .models import SiteSettings
 from products.models import Category, Product
 
@@ -25,4 +27,6 @@ def index(request):
     }
     return render(request, 'core/index.html', context)
 
-
+def user_logout(request):
+    logout(request)
+    return redirect(reverse('login'))
