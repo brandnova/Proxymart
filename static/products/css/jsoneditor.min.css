@@ -1,0 +1,23 @@
+/* Example styles for JSON Editor */
+.jsoneditor {
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+.jsoneditor-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.jsoneditor-button:hover {
+    background-color: #0056b3;
+}
+
+/* Additional styles can be added based on your specific requirements */

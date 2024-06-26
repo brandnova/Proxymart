@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% if site_settings.title %}{{ site_settings.title }}{% else %}My Site{% endif %} | {% block title %} {% endblock %} </title>
+
+    <!-- favicon -->
+    <link rel="icon" href="{% if site_settings.favicon %}{{ site_settings.favicon.url }}{% endif %}" type="image/x-icon" />
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{% static 'regform-assets/fonts/material-icon/css/material-design-iconic-font.min.css' %}">
+    <!-- Main css -->
+    <link rel="stylesheet" href="{% static 'regform-assets/css/style.css' %}">
+    <!-- Bootstrap Icons -->
+    <link href="{% static 'assets/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <!-- bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+</head>
+<body>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url "index" %}">
+            <img src="{% static 'assets/images/p-m-logoT.PNG' %}" alt="Logo" width="200" height="50" class="d-inline-block align-text-top">
+            
+          </a>
+        </div>
+    </nav>
+
+    <div class="main">
+        {% block content %}
+       
+
+        {% endblock %}
+    </div>
+
+    <!-- JS -->
+    <script src="{% static 'regform-assets/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'regform-assets/js/main.js' %}"></script>
+    <script src="{% static 'assets/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

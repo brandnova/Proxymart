@@ -1,0 +1,26 @@
+{% extends "admin/change_form.html" %}
+
+
+{% block extrahead %}
+{% load static %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/jsoneditor.min.css' %}">
+    <script src="{% static 'js/jsoneditor.min.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var container = document.getElementById('id_specifications');
+            var options = {
+                // Additional options can be added here
+            };
+            var editor = new JSONEditor(container, options);
+
+            // Synchronize the editor content with the textarea
+            var textarea = document.getElementById('id_specifications');
+            editor.set(JSON.parse(textarea.value || '{}'));
+            textarea.style.display = 'none';
+            editor.on('change', function() {
+                textarea.value = JSON.stringify(editor.get());
+            });
+        });
+    </script>
+{% endblock %}
