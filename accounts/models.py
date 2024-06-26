@@ -1,5 +1,9 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, username=None, password=None, **extra_fields):
@@ -32,3 +36,30 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
+    state = models.CharField(max_length=100, null=True, blank=True)
+    city = models.CharField(max_length=100, null=True, blank=True)
+    lga = models.CharField(max_length=100, null=True, blank=True)  # Local Government Area
+    town = models.CharField(max_length=100, null=True, blank=True)
+    zipcode = models.CharField(max_length=10, null=True, blank=True)
+    street = models.CharField(max_length=255, null=True, blank=True)
+    house_address = models.CharField(max_length=255, null=True, blank=True)
+    mobile_number = models.CharField(max_length=15, null=True, blank=True)
+    additional_info = models.TextField(null=True, blank=True)  # Any other information
+
+    def __str__(self):
+        return f'{self.user.username} Profile'
+
+
+@receiver(post_save, sender=CustomUser)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=CustomUser)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
