@@ -13,15 +13,11 @@ def index(request):
     user = request.user
     username = user.username
     
-    # if request.user.is_authenticated:
-    #     cart_count = CartItem.objects.filter(user=request.user).count()
-    # else:
-    #     cart_count = 0
+    
     context = {
         'site_settings': site_settings,
         'categories': categories,
         'products': products,
-        # 'cart_count': cart_count,
         'user': user,
         'username': username,
     }

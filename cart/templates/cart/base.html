@@ -25,6 +25,10 @@
   <link href="{% static 'assets/quill/quill.bubble.css' %}" rel="stylesheet">
   <link href="{% static 'assets/remixicon/remixicon.css' %}" rel="stylesheet">
   <link href="{% static 'assets/simple-datatables/style.css' %}" rel="stylesheet">
+  <!-- MDB -->
+  <link rel="stylesheet" href="{% static 'assets/MDB5/css/mdb.min.css' %}" />
+
+  
 
   <!-- Template Main CSS File -->
   <link href="{% static 'assets/css/dashboard-style.css' %}" rel="stylesheet">
@@ -75,7 +79,11 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="{{ profile.image.url }}" alt="Profile" class="rounded-circle">
+            {% if profile.image %}
+              <img src="{{ profile.image.url }}" alt="Profile" class="rounded-circle">
+            {% else %}
+              <img src="{% static 'assets/images/download.PNG' %}" alt="Profile" class="rounded-circle">
+            {% endif %}
             <span class="d-none d-md-block dropdown-toggle ps-2">{{ profile.user.username }}</span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -142,7 +150,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'cart_detail' %}">
-          <i class="bi bi-cart4"></i>
+          <i class="bi bi-envelope"></i>
           <span>Cart Items</span>
         </a>
       </li><!-- End Contact Page Nav -->
@@ -157,7 +165,8 @@
 
         {% endblock %}
    
-  </main><!-- End #main -->
+  </main>
+  <!-- End Main -->
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
    <div class="copyright">
@@ -180,6 +189,9 @@
  <script src="{% static 'assets/simple-datatables/simple-datatables.js' %}"></script>
  <script src="{% static 'assets/tinymce/tinymce.min.js' %}"></script>
  <script src="{% static 'assets/php-email-form/validate.js' %}"></script>
+
+ <!-- MDB -->
+ <script type="text/javascript" src="{% static 'assets/MDB5/js/mdb.umd.min.js' %}"></script>
  
  <!-- Template Main JS File -->
  <script src="{% static 'assets/js/dashboard-main.js' %}"></script>
