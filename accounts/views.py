@@ -42,7 +42,15 @@ def login(request):
 def home(request):
     site_settings = SiteSettings.objects.first()
 
+    user = request.user
+
+    try:
+        profile = Profile.objects.get(user=user)
+    except Profile.DoesNotExist:
+        profile = Profile(user=user)  
+
     return render(request, 'accounts/home.html', {
+        'profile': profile,
         'site_settings': site_settings,
     })
 
