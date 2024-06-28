@@ -15,9 +15,9 @@
       <meta name="description" content="{% if site_settings.description %}{{ site_settings.description }}{% endif %}">
       <meta name="author" content="Mr Nova">
 
-      <meta property="og:title" content="PROXYMART">
+      <meta property="og:title" content="{% if site_settings.title %}{{ site_settings.title }}{% else %}My Site{% endif %}">
       <meta property="og:description" content="{% if site_settings.description %}{{ site_settings.description }}{% endif %}">
-      {% comment %} <meta property="og:image" content="https://brandnova.github.io/img/Screenshot (18).png"> {% endcomment %}
+      <meta property="og:image" content="{% if site_settings.banner_img %}{{ site_settings.banner_img.url }}{% endif %}">
       <meta property="og:url" content="#">
       <meta property="og:type" content="website">
       <!-- bootstrap css -->

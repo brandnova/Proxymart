@@ -42,7 +42,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="{% url "index" %}" class="logo d-flex align-items-center">
         {% if site_settings.logo %}
-          <img src="{% static 'assets/images/p-m-logo.PNG' %}"  alt="">
+          <img src="{{ site_settings.logo.url }}"  alt="">
           <span class="d-none d-lg-block">ProxyMart</span>
         {% else %}
           <img src="{% static 'assets/images/p-m-logoT.PNG' %}" alt="Logo" width="200" height="50" class="d-inline-block align-text-top">
