@@ -1,0 +1,50 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Dashboard{% endblock  %}
+{% block content %}
+<div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item active">Orders</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <!-- Recent Sales -->
+  <div class="col-12">
+    <div class="card recent-sales overflow-auto">
+      <div class="card-body">
+        <h5 class="card-title">Recent Orders</h5>
+        <table class="table table-borderless datatable">
+          <thead>
+              <tr>
+                  <th scope="col">Ref</th>
+                  <th scope="col">User</th>
+                  <th scope="col">Product</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Status</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for order in orders %}
+              <tr>
+                  <th scope="row">{{ order.order_ref }}</th>
+                  <td>{{ order.user.get_username }}</td>
+                  <td>{{ order.items.first.product.name }}</td>
+                  <td>${{ order.items.first.price }}</td>
+                  <td><span class="badge text-white {% if order.status == 'pending' %}bg-warning text-dark{% elif order.status == 'completed' %}bg-success{% elif order.status == 'canceled' %}bg-danger{% endif %}">{{ order.status }}</span></td>
+              </tr>
+              {% empty %}
+              <tr>
+                  <td colspan="5">No recent orders found.</td>
+              </tr>
+              {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div><!-- End Recent Sales -->
+
+  
+{% endblock  %}

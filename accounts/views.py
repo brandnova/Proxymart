@@ -6,6 +6,7 @@ from .forms import CustomUserCreationForm, ProfileUpdateForm, UserUpdateForm
 from django.contrib.auth.decorators import login_required
 from core.models import SiteSettings
 from .models import Profile
+from orders.models import Order, Transaction
 
 def register(request):
     site_settings = SiteSettings.objects.first()
@@ -41,6 +42,8 @@ def login(request):
 @login_required
 def home(request):
     site_settings = SiteSettings.objects.first()
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')[:5]
+    transactions = Transaction.objects.filter(order__user=request.user).order_by('-created_at')[:5]
 
     user = request.user
 
@@ -51,6 +54,8 @@ def home(request):
 
     return render(request, 'accounts/home.html', {
         'profile': profile,
+        'orders': orders,
+        'transactions': transactions,
         'site_settings': site_settings,
     })
 
@@ -109,6 +114,24 @@ def user_info_update(request):
         'user_form': user_form,
         'site_settings': site_settings,
     })
+
+
+def orders_history(request):
+    site_settings = SiteSettings.objects.first()
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'accounts/orders_history.html', {
+        'orders': orders,
+       'site_settings': site_settings,
+    })
+
+def transaction_history(request):
+    site_settings = SiteSettings.objects.first()
+    transactions = Transaction.objects.filter(order__user=request.user).order_by('-created_at')
+    return render(request, 'accounts/transaction_history.html', {
+        'transactions': transactions,
+       'site_settings': site_settings,
+    })
+
 
 def user_logout(request):
     logout(request)

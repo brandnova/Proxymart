@@ -73,7 +73,7 @@
                   <!-- col.// -->
                   
                 </div>
-                <a href="#" class="btn btn-warning shadow-0 disabled"> Buy now </a>
+                <a href="{% url 'orders:buy_now' product.id %}" class="btn btn-warning shadow-0"> Buy now </a>
                 <a class="btn btn-primary shadow-0"> 
                     <form method="post" action="{% url 'add_to_cart' product.id %}">
                         {% csrf_token %}
