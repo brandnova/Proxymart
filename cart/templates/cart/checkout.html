@@ -1,0 +1,16 @@
+{% extends 'cart/base.html' %}
+{% load static %}
+{% block title %} Checkout {% endblock %}
+{% block content %}
+    <h1>Checkout</h1>
+    <form method="post" action="{% url 'orders:create_order' %}">
+        {% csrf_token %}
+        <ul>
+            {% for item in cart.items.all %}
+                <li>{{ item.product.name }} - {{ item.quantity }} x {{ item.product.price }}</li>
+            {% endfor %}
+        </ul>
+        <p>Total: {{ cart.get_total_price }}</p>
+        <button type="submit">Place Order</button>
+    </form>
+{% endblock %}

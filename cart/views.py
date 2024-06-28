@@ -57,3 +57,11 @@ def cart_detail(request):
 def user_logout(request):
     logout(request)
     return redirect(reverse('login'))
+
+def checkout(request):
+    cart = Cart.objects.get(user=request.user)
+    site_settings = SiteSettings.objects.first()
+    return render(request, 'cart/checkout.html', {
+        'cart': cart,
+        'site_settings': site_settings,
+        })
