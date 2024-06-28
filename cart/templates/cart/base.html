@@ -42,7 +42,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="{% url "index" %}" class="logo d-flex align-items-center">
         {% if site_settings.logo %}
-          <img src="{% static 'assets/images/p-m-logo.PNG' %}"  alt="">
+          <img src="{{ site_settings.logo.url }}"  alt="">
           <span class="d-none d-lg-block">ProxyMart</span>
         {% else %}
           <img src="{% static 'assets/images/p-m-logoT.PNG' %}" alt="Logo" width="200" height="50" class="d-inline-block align-text-top">
@@ -142,7 +142,7 @@
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed disabled" href="#">
+        <a class="nav-link collapsed" href="{% url 'orders_history' %}">
           <i class="bi bi-card-list"></i>
           <span>Order History</span>
         </a>
@@ -165,8 +165,7 @@
 
         {% endblock %}
    
-  </main>
-  <!-- End Main -->
+  </main><!-- End #main -->
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
    <div class="copyright">

@@ -58,6 +58,7 @@ def user_logout(request):
     logout(request)
     return redirect(reverse('login'))
 
+@login_required
 def checkout(request):
     cart = Cart.objects.get(user=request.user)
     site_settings = SiteSettings.objects.first()

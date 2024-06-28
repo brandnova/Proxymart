@@ -110,74 +110,78 @@
           <!-- Recent Sales -->
           <div class="col-12">
             <div class="card recent-sales overflow-auto">
-
-              <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
               <div class="card-body">
-                <h5 class="card-title">Recent Sales <span>| Today</span></h5>
-
-                <table class="table table-borderless datatable">
+                <h5 class="card-title">Recent Orders <span>| Last 5</span></h5>
+                <table class="table table-borderless ">
                   <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Customer</th>
-                      <th scope="col">Product</th>
-                      <th scope="col">Price</th>
-                      <th scope="col">Status</th>
-                    </tr>
+                      <tr>
+                          <th scope="col">Ref</th>
+                          <th scope="col">User</th>
+                          <th scope="col">Product</th>
+                          <th scope="col">Price</th>
+                          <th scope="col">Status</th>
+                      </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row"><a href="#">#2457</a></th>
-                      <td>Brandon Jacob</td>
-                      <td><a href="#" class="text-primary">At praesentium minu</a></td>
-                      <td>$64</td>
-                      <td><span class="badge bg-success">Approved</span></td>
-                    </tr>
-                    <tr>
-                      <th scope="row"><a href="#">#2147</a></th>
-                      <td>Bridie Kessler</td>
-                      <td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
-                      <td>$47</td>
-                      <td><span class="badge bg-warning">Pending</span></td>
-                    </tr>
-                    <tr>
-                      <th scope="row"><a href="#">#2049</a></th>
-                      <td>Ashleigh Langosh</td>
-                      <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
-                      <td>$147</td>
-                      <td><span class="badge bg-success">Approved</span></td>
-                    </tr>
-                    <tr>
-                      <th scope="row"><a href="#">#2644</a></th>
-                      <td>Angus Grady</td>
-                      <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-                      <td>$67</td>
-                      <td><span class="badge bg-danger">Rejected</span></td>
-                    </tr>
-                    <tr>
-                      <th scope="row"><a href="#">#2644</a></th>
-                      <td>Raheem Lehner</td>
-                      <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
-                      <td>$165</td>
-                      <td><span class="badge bg-success">Approved</span></td>
-                    </tr>
+                      {% for order in orders %}
+                      <tr>
+                          <th scope="row">{{ order.order_ref }}</th>
+                          <td>{{ order.user.get_username }}</td>
+                          <td>{{ order.items.first.product.name }}</td>
+                          <td>${{ order.items.first.price }}</td>
+                          <td><span class="badge text-white {% if order.status == 'pending' %}bg-warning text-dark{% elif order.status == 'completed' %}bg-success{% elif order.status == 'canceled' %}bg-danger{% endif %}">{{ order.status }}</span></td>
+                      </tr>
+                      {% empty %}
+                      <tr>
+                          <td colspan="5">No recent orders found.</td>
+                      </tr>
+                      {% endfor %}
                   </tbody>
                 </table>
-
               </div>
+            </div>
+          </div><!-- End Recent Sales -->
 
+          <!-- Recent Sales -->
+          <div class="col-12">
+            <div class="card recent-sales overflow-auto">
+              <div class="card-body">
+                <h5 class="card-title">Recent Transactions</h5>
+                <table class="table table-borderless ">
+                  <thead>
+                      <tr>
+                          <th scope="col">Transaction ID</th>
+                          <th scope="col">Order</th>
+                          <th scope="col">Amount</th>
+                          <th scope="col">Status</th>
+                          <th scope="col">Date</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for transaction in transactions %}
+                      <tr>
+                          <td>{{ transaction.transaction_id }}</td>
+                          <td>{{ transaction.order.order_ref }}</td>
+                          <td>{{ transaction.amount }}</td>
+                          <td><span class="badge text-white
+                              {% if transaction.status == 'pending' %}
+                                  bg-warning text-dark
+                              {% elif transaction.status == 'completed' %}
+                                  bg-success
+                              {% elif transaction.status == 'failed' %}
+                                  bg-danger
+                              {% endif %}
+                              ">{{ transaction.status }}</span></td>
+                          <td>{{ transaction.created_at }}</td>
+                      </tr>
+                      {% empty %}
+                      <tr>
+                          <td colspan="5">No recent transactions found.</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+              </div>
             </div>
           </div><!-- End Recent Sales -->
 
@@ -202,35 +206,35 @@
           </div>
 
           <div class="card-body pb-0">
-            <h5 class="card-title">News &amp; Updates <span>| Today</span></h5>
+            <h5 class="card-title">Adds &amp; Updates <span>| Today</span></h5>
 
             <div class="news">
               <div class="post-item clearfix">
-                <img src="assets/img/news-1.jpg" alt="">
+                <img src="assets/img/news-1.jpg" alt="img">
                 <h4><a href="#">Nihil blanditiis at in nihil autem</a></h4>
                 <p>Sit recusandae non aspernatur laboriosam. Quia enim eligendi sed ut harum...</p>
               </div>
 
               <div class="post-item clearfix">
-                <img src="assets/img/news-2.jpg" alt="">
+                <img src="assets/img/news-2.jpg" alt="img">
                 <h4><a href="#">Quidem autem et impedit</a></h4>
                 <p>Illo nemo neque maiores vitae officiis cum eum turos elan dries werona nande...</p>
               </div>
 
               <div class="post-item clearfix">
-                <img src="assets/img/news-3.jpg" alt="">
+                <img src="assets/img/news-3.jpg" alt="img">
                 <h4><a href="#">Id quia et et ut maxime similique occaecati ut</a></h4>
                 <p>Fugiat voluptas vero eaque accusantium eos. Consequuntur sed ipsam et totam...</p>
               </div>
 
               <div class="post-item clearfix">
-                <img src="assets/img/news-4.jpg" alt="">
+                <img src="assets/img/news-4.jpg" alt="img">
                 <h4><a href="#">Laborum corporis quo dara net para</a></h4>
                 <p>Qui enim quia optio. Eligendi aut asperiores enim repellendusvel rerum cuder...</p>
               </div>
 
               <div class="post-item clearfix">
-                <img src="assets/img/news-5.jpg" alt="">
+                <img src="assets/img/news-5.jpg" alt="img">
                 <h4><a href="#">Et dolores corrupti quae illo quod dolor</a></h4>
                 <p>Odit ut eveniet modi reiciendis. Atque cupiditate libero beatae dignissimos eius...</p>
               </div>
@@ -244,4 +248,5 @@
 
     </div>
   </section>
+
 {% endblock  %}
