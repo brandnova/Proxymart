@@ -168,7 +168,7 @@
                                        <p class="description_text">{{ product.description }}</p>
                                        <div class="btn_main">
                                           <div class="buy_bt"><a href="#">{{ product.quantity }} <i>left</i></a></div>
-                                          <div class="buy_bt"><a href="#">Buy Now</a></div>
+                                          <div class="buy_bt"><a href="{% url 'orders:buy_now' product.id %}">Buy Now</a></div>
                                           <div class="seemore_bt"><a href="{% url 'product_list' %}">See More</a></div>
                                        </div>
                                     </div>

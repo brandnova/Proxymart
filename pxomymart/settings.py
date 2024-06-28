@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-^uz2y@^#5k!imxjbt6*0&w_%qdsmf$(7mc9+00*umn0z85rpoi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -135,6 +135,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 PAYSTACK_PUBLIC_KEY = 'pk_test_2b07396de3182eeb036f47ca499c478dd33ec854'
 PAYSTACK_SECRET_KEY = 'sk_test_e6bd21e28df1b493f12d70c2689cd15b5a08802b'
+PAYSTACK_BASE_URL = 'https://api.paystack.co'
+
 
 
 AZZMIN_SETTINGS = {

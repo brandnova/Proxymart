@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buy Now</title>
+</head>
+<body>
+    <h1>Buy Now</h1>
+    <p>{{ product.name }}</p>
+    <p>Price: ${{ product.price }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Buy Now</button>
+    </form>
+</body>
+</html>
