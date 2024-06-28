@@ -1,0 +1,13 @@
+<!-- templates/orders/payment_error.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Error</title>
+</head>
+<body>
+    <h1>Payment Error</h1>
+    <p>{{ error }}</p>
+    <a href="{% url 'cart:checkout' %}">Return to Checkout</a>
+</body>
+</html>

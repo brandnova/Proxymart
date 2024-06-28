@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'accounts',
     'products',
     'cart',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -131,6 +132,10 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+PAYSTACK_PUBLIC_KEY = 'pk_test_2b07396de3182eeb036f47ca499c478dd33ec854'
+PAYSTACK_SECRET_KEY = 'sk_test_e6bd21e28df1b493f12d70c2689cd15b5a08802b'
+
 
 AZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
