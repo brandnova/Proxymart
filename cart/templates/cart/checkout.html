@@ -2,7 +2,6 @@
 {% load static %}
 {% block title %} Checkout {% endblock %}
 {% block content %}
-    {% comment %} <h1>Checkout</h1> {% endcomment %}
       <section class=" py-5">
         <div class="container">
           <div class="row">
@@ -13,15 +12,11 @@
               <div class="card shadow-0 border">
 
                 <div class="p-4">
-                    <h4 class="mb-3">Summary</h4>
+                    <h4 class="mb-3">Checkout Summary</h4>
                     <div class="d-flex justify-content-between">
                     <p class="mb-2">Total price:</p>
                     <p class="mb-2">#{{ cart.get_total_price }}</p>
                     </div>
-                    {% comment %} <div class="d-flex justify-content-between">
-                    <p class="mb-2">Discount:</p>
-                    <p class="mb-2 text-danger">- $60.00</p>
-                    </div> {% endcomment %}
                     <div class="d-flex justify-content-between">
                     <p class="mb-2">Shipping cost:</p>
                     <p class="mb-2">+ $14.00</p>
@@ -34,188 +29,141 @@
                     <hr />
                 </div>
 
-
                 <div class="p-4">
-                  <h4 class="card-title mb-3">Guest checkout</h4>
-                  <div class="row">
 
-                    {% comment %} <div class="row mb-3">
-                        <label for="inputText" class="col-sm-2 col-form-label">Text</label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control">
+                  <!-- In checkout.html template -->
+                  <form method="post" action="{% url 'orders:create_order' %}">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="use_default_shipping">
+                            <input type="checkbox" id="use_default_shipping" name="use_default_shipping" value="1">
+                            Use default shipping information
+                        </label>
+                    </div>
+                    
+                    <div id="additional-info-form">
+                        <div class="row">
+                            <div class="form-group col-6 mb-3">
+                                <label for="{{ form.first_name.id_for_label }}">First Name:</label>
+                                {{ form.first_name }}
+                            </div>
+                            <div class="form-group col-6 mb-3">
+                                <label for="{{ form.last_name.id_for_label }}">Last Name:</label>
+                                {{ form.last_name }}
+                            </div>
                         </div>
-                    </div> {% endcomment %}
-
-
-                    <div class="col-6 mb-3">
-                      <p class="mb-0">First name</p>
-                        {% comment %} <label for="inputText" class="col-sm-2 col-form-label">Text</label> {% endcomment %}
-                        <input type="text" id="typeText" placeholder="Type here" class="form-control" />
-                    </div>
-      
-                    <div class="col-6">
-                      <p class="mb-0">Last name</p>
-                      <div class="form-outline">
-                        <input type="text" id="typeText" placeholder="Type here" class="form-control" />
-                      </div>
-                    </div>
-      
-                    <div class="col-6 mb-3">
-                      <p class="mb-0">Phone</p>
-                      <div class="form-outline">
-                        <input type="tel" id="typePhone" value="+48 " class="form-control" />
-                      </div>
-                    </div>
-      
-                    <div class="col-6 mb-3">
-                      <p class="mb-0">Email</p>
-                      <div class="form-outline">
-                        <input type="email" id="typeEmail" placeholder="example@gmail.com" class="form-control" />
-                      </div>
-                    </div>
-                  </div>
-      
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                    <label class="form-check-label" for="flexCheckDefault">Keep me up to date on news</label>
-                  </div>
-      
-                  <hr class="my-4" />
-      
-                  <h4 class="card-title mb-3">Shipping info</h4>
-      
-                  <div class="row mb-3">
-                    <div class="col-lg-4 mb-3">
-                      <!-- Default checked radio -->
-                      <div class="form-check h-100 border rounded-3">
-                        <div class="p-3">
-                          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked />
-                          <label class="form-check-label" for="flexRadioDefault1">
-                            Express delivery <br />
-                            <small class="text-muted">3-4 days via Fedex </small>
-                          </label>
+                        <div class="row">
+                            <div class="form-group col-6 mb-3">
+                                <label for="{{ form.phone_number.id_for_label }}">Phone Number:</label>
+                                {{ form.phone_number }}
+                            </div>
+                            <div class="form-group col-6 mb-3">
+                                <label for="{{ form.email.id_for_label }}">Email:</label>
+                                {{ form.email }}
+                            </div>
                         </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-4 mb-3">
-                      <!-- Default radio -->
-                      <div class="form-check h-100 border rounded-3">
-                        <div class="p-3">
-                          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
-                          <label class="form-check-label" for="flexRadioDefault2">
-                            Post office <br />
-                            <small class="text-muted">20-30 days via post </small>
-                          </label>
+                        <hr class="my-4" />
+                
+                        <h4 class="card-title mb-3">Shipping info</h4>
+                        
+                        <div class="row">
+                            <div class="form-group col-6 mb-3">
+                                <label for="{{ form.state.id_for_label }}">State:</label>
+                                {{ form.state }}
+                            </div>
+                            <div class="form-group col-6 mb-3">
+                                <label for="{{ form.lga.id_for_label }}">LGA:</label>
+                                {{ form.lga }}
+                            </div>
                         </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-4 mb-3">
-                      <!-- Default radio -->
-                      <div class="form-check h-100 border rounded-3">
-                        <div class="p-3">
-                          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" />
-                          <label class="form-check-label" for="flexRadioDefault3">
-                            Self pick-up <br />
-                            <small class="text-muted">Come to our shop </small>
-                          </label>
+                        <div class="row">
+                            <div class="form-group col-6 mb-3">
+                                <label for="{{ form.city.id_for_label }}">City:</label>
+                                {{ form.city }}
+                            </div>
+                            <div class="form-group col-6 mb-3">
+                                <label for="{{ form.postal_code.id_for_label }}">Postal Code:</label>
+                                {{ form.postal_code }}
+                            </div>
                         </div>
-                      </div>
+                        <div class="form-group mb-3">
+                            <label for="{{ form.house_address.id_for_label }}">House Address:</label>
+                            {{ form.house_address }}
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="{{ form.additional_info.id_for_label }}">Additional Info:</label>
+                            {{ form.additional_info }}
+                        </div>
                     </div>
-                  </div>
-      
-                  <div class="row">
-                    <div class="col-sm-8 mb-3">
-                      <p class="mb-0">Address</p>
-                      <div class="form-outline">
-                        <input type="text" id="typeText" placeholder="Type here" class="form-control" />
-                      </div>
-                    </div>
-      
-                    <div class="col-sm-4 mb-3">
-                      <p class="mb-0">City</p>
-                      <select class="form-select">
-                        <option value="1">New York</option>
-                        <option value="2">Moscow</option>
-                        <option value="3">Samarqand</option>
-                      </select>
-                    </div>
-      
-                    <div class="col-sm-4 mb-3">
-                      <p class="mb-0">House</p>
-                      <div class="form-outline">
-                        <input type="text" id="typeText" placeholder="Type here" class="form-control" />
-                      </div>
-                    </div>
-      
-                    <div class="col-sm-4 col-6 mb-3">
-                      <p class="mb-0">Postal code</p>
-                      <div class="form-outline">
-                        <input type="text" id="typeText" class="form-control" />
-                      </div>
-                    </div>
-      
-                    <div class="col-sm-4 col-6 mb-3">
-                      <p class="mb-0">Zip</p>
-                      <div class="form-outline">
-                        <input type="text" id="typeText" class="form-control" />
-                      </div>
-                    </div>
-                  </div>
-      
-                  <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" />
-                    <label class="form-check-label" for="flexCheckDefault1">Save this address</label>
-                  </div>
-      
-                  <div class="mb-3">
-                    <p class="mb-0">Message to seller</p>
-                    <div class="form-outline">
-                      <textarea class="form-control" id="textAreaExample1" rows="2"></textarea>
-                    </div>
-                  </div>
-      
-                  <div class="float-end">
-                    <form method="post" action="{% url 'orders:create_order' %}">
-                        {% csrf_token %}
-                        <a href="{% url 'cart_detail' %}" class="btn btn-light shadow-0 border border-danger">Cancel</a>
-                        <button type="submit" class="btn btn-success shadow-0 border">Proceed to Payment</button>
-                    </form>
-                  </div>
+                    
+                    <a href="{% url 'cart_detail' %}" class="btn btn-light shadow-0 border border-danger">Cancel</a>
+                    <button type="submit" class="btn btn-success shadow-0 border">Proceed to Payment</button>
+                  </form>
+                
+                  <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const checkbox = document.getElementById('use_default_shipping');
+                        const formDiv = document.getElementById('additional-info-form');
+                        const formFields = formDiv.querySelectorAll('input, textarea');
+                
+                        checkbox.addEventListener('change', function() {
+                            if (this.checked) {
+                                formDiv.style.display = 'none';
+                                formFields.forEach(field => {
+                                    field.disabled = true;
+                                });
+                            } else {
+                                formDiv.style.display = 'block';
+                                formFields.forEach(field => {
+                                    field.disabled = false;
+                                });
+                            }
+                        });
+                
+                        // Initial check to disable the form if the checkbox is already checked
+                        if (checkbox.checked) {
+                            formDiv.style.display = 'none';
+                            formFields.forEach(field => {
+                                field.disabled = true;
+                            });
+                        }
+                    });
+                  </script>
+                
+                  
                 </div>
               </div>
               <!-- Checkout -->
             </div>
             <div class="col-xl-4 col-lg-4 d-flex justify-content-center justify-content-lg-end">
-                <div class="ms-lg-4 mt-4 mt-lg-0" style="max-width: 320px; max-height: 900px; overflow: scroll;">
+                <div class="ms-lg-4 mt-4 mt-lg-0 p-3" style="max-width: 320px; max-height: 900px; overflow-y: scroll;">
                     
-                    <h4 class="text-dark my-4">Items in cart</h4>
-
+                  <h4 class="text-dark my-4">Items in cart</h4>
                     
-                            {% for item in cart.items.all %}
-                            <div class="d-flex align-items-center mb-4">
-                                <div class="me-3 position-relative">
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-secondary">
-                                    {{ item.quantity }}
-                                </span>
-                                <img src="{{ item.product.images.url }}" style="height: 96px; width: 96px;" class="img-sm rounded border" />
-                                </div>
-                                <div class="">
-                                <a href="#" class="nav-link">
-                                    {{ item.product.name }}
-                                </a>
-                                <div class="price text-muted">Total: #{{ item.get_total_price }}</div>
-                                </div>
-                            </div>
-                                {% comment %} <li>{{ item.product.name }} - {{ item.quantity }} x {{ item.product.price }}</li> {% endcomment %}
-                            {% endfor %}
-                        {% comment %} <p>Total: {{ cart.get_total_price }}</p> {% endcomment %}
-                        
-        
+                  {% for item in cart.items.all %}
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="me-3 position-relative">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-secondary">
+                            {{ item.quantity }}
+                        </span>
+                        <img src="{{ item.product.images.url }}" style="height: 96px; width: 96px;" class="img-sm rounded border" />
+                        </div>
+                        <div class="">
+                        <a href="#" class="nav-link">
+                            {{ item.product.name }}
+                        </a>
+                        <div class="price text-muted">Total: #{{ item.get_total_price }}</div>
+                        </div>
+                    </div>
+                  {% endfor %}
 
                 </div>
             </div>
           </div>
         </div>
       </section>
+      
+
       
 {% endblock %}

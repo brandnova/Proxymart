@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.urls import reverse
 from products.models import Product, Category
+from .forms import AdditionalOrderInfoForm
+from orders.views import create_order
 from .models import Cart, CartItem
 from core.models import SiteSettings
 from accounts.models import Profile
@@ -62,7 +64,19 @@ def user_logout(request):
 def checkout(request):
     cart = Cart.objects.get(user=request.user)
     site_settings = SiteSettings.objects.first()
+
+    if request.method == 'POST':
+        form = AdditionalOrderInfoForm(request.POST)
+        if form.is_valid():
+            # If form is valid, proceed to create the order
+            return create_order(request, form.cleaned_data)
+    else:
+        form = AdditionalOrderInfoForm()
+
     return render(request, 'cart/checkout.html', {
         'cart': cart,
         'site_settings': site_settings,
-        })
+        'form': form,
+    })
+
+
