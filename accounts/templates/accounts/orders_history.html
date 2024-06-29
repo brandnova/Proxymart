@@ -32,8 +32,19 @@
                   <th scope="row">{{ order.order_ref }}</th>
                   <td>{{ order.user.get_username }}</td>
                   <td>{{ order.items.first.product.name }}</td>
-                  <td>${{ order.items.first.price }}</td>
-                  <td><span class="badge text-white {% if order.status == 'pending' %}bg-warning text-dark{% elif order.status == 'completed' %}bg-success{% elif order.status == 'canceled' %}bg-danger{% endif %}">{{ order.status }}</span></td>
+                  <td>#{{ order.items.first.price }}</td>
+                  <td>
+                    <span class="badge 
+                      {% if order.status == 'pending' %} bg-warning text-white
+                      {% elif order.status == 'processing' %} bg-info text-white
+                      {% elif order.status == 'shipped' %} bg-primary
+                      {% elif order.status == 'in_transit' %} bg-secondary text-light
+                      {% elif order.status == 'delivered' %} bg-success
+                      {% elif order.status == 'canceled' %} bg-danger
+                      {% endif %}" >
+                      {{ order.status }}
+                    </span>
+                  </td>
               </tr>
               {% empty %}
               <tr>
