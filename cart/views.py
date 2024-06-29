@@ -64,7 +64,8 @@ def user_logout(request):
 def checkout(request):
     cart = Cart.objects.get(user=request.user)
     site_settings = SiteSettings.objects.first()
-
+    user = request.user
+    profile = Profile.objects.get(user=user)
     if request.method == 'POST':
         form = AdditionalOrderInfoForm(request.POST)
         if form.is_valid():
@@ -77,6 +78,7 @@ def checkout(request):
         'cart': cart,
         'site_settings': site_settings,
         'form': form,
+        'profile': profile,
     })
 
 

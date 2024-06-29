@@ -41,6 +41,90 @@
                             Use default shipping information
                         </label>
                     </div>
+
+                    <div id="hidden-element" class="row border rounded-3 mb-3" style="display: none;">
+                        <div class="row">
+                            <div class="col-lg-4 mb-3">
+                                <div class="p-3 h-100">
+                                  <label class="form-check-label" for="flexRadioDefault1">
+                                    State <br />
+                                    <small class="text-muted">{{ profile.state }} </small>
+                                  </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-3">
+                                <div class="p-3 h-100">
+                                  <label class="form-check-label" for="flexRadioDefault1">
+                                    City <br />
+                                    <small class="text-muted">{{ profile.city }} </small>
+                                  </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-3">
+                                <div class="p-3 h-100">
+                                  <label class="form-check-label" for="flexRadioDefault1">
+                                    LGA <br />
+                                    <small class="text-muted">{{ profile.lga }} </small>
+                                  </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 mb-3">
+                                <div class="p-3 h-100">
+                                  <label class="form-check-label" for="flexRadioDefault1">
+                                    Town <br />
+                                    <small class="text-muted">{{ profile.town }} </small>
+                                  </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-3">
+                                <div class="p-3 h-100">
+                                  <label class="form-check-label" for="flexRadioDefault1">
+                                    Zipcode <br />
+                                    <small class="text-muted">{{ profile.zipcode }} </small>
+                                  </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-3">
+                                <div class="p-3 h-100">
+                                  <label class="form-check-label" for="flexRadioDefault1">
+                                    Street <br />
+                                    <small class="text-muted">{{ profile.street }} </small>
+                                  </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 mb-3">
+                                <div class="p-3 h-100">
+                                  <label class="form-check-label" for="flexRadioDefault1">
+                                    House Address <br />
+                                    <small class="text-muted">{{ profile.house_address }} </small>
+                                  </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-3">
+                                <div class="p-3 h-100">
+                                  <label class="form-check-label" for="flexRadioDefault1">
+                                    Mobile number <br />
+                                    <small class="text-muted">{{ profile.mobile_number }} </small>
+                                  </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-3">
+                                <div class="p-3 h-100">
+                                  <label class="form-check-label" for="flexRadioDefault1">
+                                    Additional Info <br />
+                                    <small class="text-muted">{{ profile.additional_info }} </small>
+                                  </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <a href="{% url 'profile' %}" class="btn btn-primary shadow-primary border text-light my-3">Edit Shipping Info</a>
+                        </div>
+                    </div>
                     
                     <div id="additional-info-form">
                         <div class="row">
@@ -103,33 +187,38 @@
                 
                   <script>
                     document.addEventListener('DOMContentLoaded', function() {
-                        const checkbox = document.getElementById('use_default_shipping');
-                        const formDiv = document.getElementById('additional-info-form');
-                        const formFields = formDiv.querySelectorAll('input, textarea');
-                
-                        checkbox.addEventListener('change', function() {
-                            if (this.checked) {
-                                formDiv.style.display = 'none';
-                                formFields.forEach(field => {
-                                    field.disabled = true;
-                                });
-                            } else {
-                                formDiv.style.display = 'block';
-                                formFields.forEach(field => {
-                                    field.disabled = false;
-                                });
-                            }
-                        });
-                
-                        // Initial check to disable the form if the checkbox is already checked
-                        if (checkbox.checked) {
-                            formDiv.style.display = 'none';
-                            formFields.forEach(field => {
-                                field.disabled = true;
-                            });
+                      const checkbox = document.getElementById('use_default_shipping');
+                      const formDiv = document.getElementById('additional-info-form');
+                      const formFields = formDiv.querySelectorAll('input, textarea');
+                      const hiddenElement = document.getElementById('hidden-element'); // Add this line
+                  
+                      checkbox.addEventListener('change', function() {
+                        if (this.checked) {
+                          formDiv.style.display = 'none';
+                          formFields.forEach(field => {
+                            field.disabled = true;
+                          });
+                          hiddenElement.style.display = 'block'; // Add this line
+                        } else {
+                          formDiv.style.display = 'block';
+                          formFields.forEach(field => {
+                            field.disabled = false;
+                          });
+                          hiddenElement.style.display = 'none'; // Add this line
                         }
+                      });
+                  
+                      // Initial check to disable the form if the checkbox is already checked
+                      if (checkbox.checked) {
+                        formDiv.style.display = 'none';
+                        formFields.forEach(field => {
+                          field.disabled = true;
+                        });
+                        hiddenElement.style.display = 'block'; // Add this line
+                      }
                     });
                   </script>
+                  
                 
                   
                 </div>
