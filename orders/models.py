@@ -8,13 +8,27 @@ from products.models import Product
 class Order(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Pending'),
-        ('completed', 'Completed'),
+        ('processing', 'Processing'),
+        ('shipped', 'Shipped'),
+        ('in_transit', 'In Transit'),
+        ('delivered', 'Delivered'),
         ('canceled', 'Canceled'),
     ]
-    
+
     order_ref = models.CharField(max_length=14, unique=True, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    first_name = models.CharField(max_length=100, null=True, blank=True)
+    last_name = models.CharField(max_length=100, null=True, blank=True)
+    phone_number = models.CharField(max_length=20, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    state = models.CharField(max_length=100, null=True, blank=True)
+    lga = models.CharField(max_length=100, null=True, blank=True)
+    city = models.CharField(max_length=100, null=True, blank=True)
+    postal_code = models.CharField(max_length=20, null=True, blank=True)
+    house_address = models.TextField(null=True, blank=True)
+    additional_info = models.TextField(blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -34,6 +48,7 @@ class Order(models.Model):
             order_ref = ''.join(random.choices(string.ascii_uppercase + string.digits, k=14))
             if not Order.objects.filter(order_ref=order_ref).exists():
                 return order_ref
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
